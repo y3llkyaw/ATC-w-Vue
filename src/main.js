@@ -8,6 +8,7 @@ new Vue({
   data(){
     return {
       cart: [],
+      isAuth:false,
     }
   },
   render: h => h(App),

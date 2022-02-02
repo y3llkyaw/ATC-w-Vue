@@ -1,6 +1,10 @@
 <template>
     <Master>
-        <div class="container mt-5 pt-5">
+        
+        <div class="container mt-5 pt-5 text-center">
+          <div v-if="loading" class="spinner-border text-primary mt-5" role="status">
+              
+          </div>
             <div class="row">
               <div v-for="(p,i) in product" :key="i" class="col-lg-4 col-md-12 mb-4">
                     <!--Card-->
@@ -8,7 +12,8 @@
 
                     <!--Card image-->
                     <div class="view view-cascade" style="">
-                      <img v-bind:src="p.image" class="card-img-top" style="max-height:300px; width:auto;" align="center">
+                      
+                      <img v-bind:src="p.image" style="max-height:300px; max-width:300px; width:auto;" align="center">
                       <a href="#!">
                         <div class="mask rgba-white-slight"></div>
                       </a>
@@ -45,17 +50,18 @@ import axios from 'axios'
 export default {
     data(){
       return {
-        product:[]
+        product:[],
+        loading:true,
       }
     },
     components: {Master},
     beforeCreate(){
       axios.get('https://fakestoreapi.com/products')
             .then((res)=>{
-              this.product = res.data
-            })
-            
+              this.product = res.data;
+              this.loading=false;});
     },
+
     name:'Products',
     methods:{
       ATC: function(p){
@@ -65,6 +71,7 @@ export default {
         })
         if(!isInCart){
              cart.push({...p,qty:1});
+            
         console.log(p);
         }else{
           return
@@ -75,6 +82,4 @@ export default {
     
     }
     }
-
-    
 </script>
